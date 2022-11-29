@@ -267,16 +267,26 @@ def calculations():
         if (i==0):
 
             #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
-            f.write("GW\t"+str(tag)+"\t"+str(seg)+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+            f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
             tag += 1
             #f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\t-s/2\t0\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
             #tag += 1
         else:
-            #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
-            f.write("GW\t"+str(tag)+"\t"+str(seg)+"\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t"+str(Xcoor[i-1])+"-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
-            tag += 1
-            #f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
-            #tag += 1
+            if (i%2 != 0):
+                #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
+                f.write("GW\t" + str(tag) + "\t" + str(int(seg)) + "\t" + str(
+                    Xcoor[i - 1]) + "-feed_length\t0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t0\t" + str(
+                    Xcoor[i - 1]) + "-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^" + str(
+                    i) + "\t0\tdmax\t'DipoleUpper" + str(int(N - i)) + "\n")
+                tag += 1
+                # f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
+                # tag += 1
+            else:
+                #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
+                f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t"+str(Xcoor[i-1])+"-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+                tag += 1
+                #f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
+                #tag += 1
 
 
         print("l"+str(int(i+1))+" =", Dipolelengths[i], "    s =", s)
@@ -302,7 +312,7 @@ def calculations():
     f.write("GN\t-1\n")
     f.write("EK\n")
     #     Voltage TAG SEG OPT REAL IMAG MAGN PHASE 
-    f.write("EX\t0\t"+str(tag)+"\t2\t0\t1\t0\t1\t0\t0\n")
+    f.write("EX\t0\t"+str(tag)+"\t1\t0\t1\t0\t1\t0\t0\n")
 
 
     #Z-LINE
