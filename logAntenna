@@ -9,71 +9,44 @@ SY	B=fmax/fmin
 SY	thao=0.95
 SY	sigma=0.17984999999999998
 SY	N=13
-SY	dmax=0.002
+SY	dmax=0.0025
 SY	Z_term=0.03177966101694915
 SY	feed_length=0.1
 SY	lambdaMax=0.2542372881355932
 SY	segments=5
-SY	s=0.0049022700339707535
-GW	1	segments	-feed_length	s/2	0	-feed_length	0.5*(lambdaMax*0.5)*(thao)^0	0	dmax	'DipoleUpper13
-GW	2	segments	-feed_length	-s/2	0	-feed_length	-0.5*(lambdaMax*0.5)*(thao)^0	0	dmax	'DipoleDown13
-GW	3	segments	0.04572457627118647-feed_length	s/2	0	0.04572457627118647-feed_length	0.5*(lambdaMax*0.5)*(thao)^1	0	dmax	'DipoleUpper12
-GW	4	segments	0.04572457627118647-feed_length	-s/2	0	0.04572457627118647-feed_length	-0.5*(lambdaMax*0.5)*(thao)^1	0	dmax	'DipoleDown12
-GW	5	segments	0.08916292372881351-feed_length	s/2	0	0.08916292372881351-feed_length	0.5*(lambdaMax*0.5)*(thao)^2	0	dmax	'DipoleUpper11
-GW	6	segments	0.08916292372881351-feed_length	-s/2	0	0.08916292372881351-feed_length	-0.5*(lambdaMax*0.5)*(thao)^2	0	dmax	'DipoleDown11
-GW	7	segments	0.13042935381355927-feed_length	s/2	0	0.13042935381355927-feed_length	0.5*(lambdaMax*0.5)*(thao)^3	0	dmax	'DipoleUpper10
-GW	8	segments	0.13042935381355927-feed_length	-s/2	0	0.13042935381355927-feed_length	-0.5*(lambdaMax*0.5)*(thao)^3	0	dmax	'DipoleDown10
-GW	9	segments	0.16963246239406776-feed_length	s/2	0	0.16963246239406776-feed_length	0.5*(lambdaMax*0.5)*(thao)^4	0	dmax	'DipoleUpper9
-GW	10	segments	0.16963246239406776-feed_length	-s/2	0	0.16963246239406776-feed_length	-0.5*(lambdaMax*0.5)*(thao)^4	0	dmax	'DipoleDown9
-GW	11	segments	0.2068754155455508-feed_length	s/2	0	0.2068754155455508-feed_length	0.5*(lambdaMax*0.5)*(thao)^5	0	dmax	'DipoleUpper8
-GW	12	segments	0.2068754155455508-feed_length	-s/2	0	0.2068754155455508-feed_length	-0.5*(lambdaMax*0.5)*(thao)^5	0	dmax	'DipoleDown8
-GW	13	segments	0.2422562210394597-feed_length	s/2	0	0.2422562210394597-feed_length	0.5*(lambdaMax*0.5)*(thao)^6	0	dmax	'DipoleUpper7
-GW	14	segments	0.2422562210394597-feed_length	-s/2	0	0.2422562210394597-feed_length	-0.5*(lambdaMax*0.5)*(thao)^6	0	dmax	'DipoleDown7
-GW	15	segments	0.27586798625867315-feed_length	s/2	0	0.27586798625867315-feed_length	0.5*(lambdaMax*0.5)*(thao)^7	0	dmax	'DipoleUpper6
-GW	16	segments	0.27586798625867315-feed_length	-s/2	0	0.27586798625867315-feed_length	-0.5*(lambdaMax*0.5)*(thao)^7	0	dmax	'DipoleDown6
-GW	17	segments	0.3077991632169259-feed_length	s/2	0	0.3077991632169259-feed_length	0.5*(lambdaMax*0.5)*(thao)^8	0	dmax	'DipoleUpper5
-GW	18	segments	0.3077991632169259-feed_length	-s/2	0	0.3077991632169259-feed_length	-0.5*(lambdaMax*0.5)*(thao)^8	0	dmax	'DipoleDown5
-GW	19	segments	0.338133781327266-feed_length	s/2	0	0.338133781327266-feed_length	0.5*(lambdaMax*0.5)*(thao)^9	0	dmax	'DipoleUpper4
-GW	20	segments	0.338133781327266-feed_length	-s/2	0	0.338133781327266-feed_length	-0.5*(lambdaMax*0.5)*(thao)^9	0	dmax	'DipoleDown4
-GW	21	segments	0.36695166853208905-feed_length	s/2	0	0.36695166853208905-feed_length	0.5*(lambdaMax*0.5)*(thao)^10	0	dmax	'DipoleUpper3
-GW	22	segments	0.36695166853208905-feed_length	-s/2	0	0.36695166853208905-feed_length	-0.5*(lambdaMax*0.5)*(thao)^10	0	dmax	'DipoleDown3
-GW	23	segments	0.394328661376671-feed_length	s/2	0	0.394328661376671-feed_length	0.5*(lambdaMax*0.5)*(thao)^11	0	dmax	'DipoleUpper2
-GW	24	segments	0.394328661376671-feed_length	-s/2	0	0.394328661376671-feed_length	-0.5*(lambdaMax*0.5)*(thao)^11	0	dmax	'DipoleDown2
-GW	25	segments	0.4203368045790239-feed_length	s/2	0	0.4203368045790239-feed_length	0.5*(lambdaMax*0.5)*(thao)^12	0	dmax	'DipoleUpper1
-GW	26	segments	0.4203368045790239-feed_length	-s/2	0	0.4203368045790239-feed_length	-0.5*(lambdaMax*0.5)*(thao)^12	0	dmax	'DipoleDown1
-GW	27	3	-feed_length-Z_term	7*dmax	0	-feed_length-Z_term	-7*dmax	0	dmax	'DownZ_term
-GW	28	3	0.4203368045790239	-7*dmax	0	0.4203368045790239	7*dmax	0	dmax	'FeedLine
+SY	s=0.006878227506135009
+GW	1	19	-feed_length	-0.5*(lambdaMax*0.5)*(thao)^0	0	-feed_length	0.5*(lambdaMax*0.5)*(thao)^0	0	dmax	'DipoleUpper13
+GW	2	17.0	0.04572457627118647-feed_length	-0.5*(lambdaMax*0.5)*(thao)^1	0	0.04572457627118647-feed_length	0.5*(lambdaMax*0.5)*(thao)^1	0	dmax	'DipoleUpper12
+GW	3	17	0.08916292372881351-feed_length	-0.5*(lambdaMax*0.5)*(thao)^2	0	0.08916292372881351-feed_length	0.5*(lambdaMax*0.5)*(thao)^2	0	dmax	'DipoleUpper11
+GW	4	15.0	0.13042935381355927-feed_length	-0.5*(lambdaMax*0.5)*(thao)^3	0	0.13042935381355927-feed_length	0.5*(lambdaMax*0.5)*(thao)^3	0	dmax	'DipoleUpper10
+GW	5	15.0	0.16963246239406776-feed_length	-0.5*(lambdaMax*0.5)*(thao)^4	0	0.16963246239406776-feed_length	0.5*(lambdaMax*0.5)*(thao)^4	0	dmax	'DipoleUpper9
+GW	6	15	0.2068754155455508-feed_length	-0.5*(lambdaMax*0.5)*(thao)^5	0	0.2068754155455508-feed_length	0.5*(lambdaMax*0.5)*(thao)^5	0	dmax	'DipoleUpper8
+GW	7	13.0	0.2422562210394597-feed_length	-0.5*(lambdaMax*0.5)*(thao)^6	0	0.2422562210394597-feed_length	0.5*(lambdaMax*0.5)*(thao)^6	0	dmax	'DipoleUpper7
+GW	8	13	0.27586798625867315-feed_length	-0.5*(lambdaMax*0.5)*(thao)^7	0	0.27586798625867315-feed_length	0.5*(lambdaMax*0.5)*(thao)^7	0	dmax	'DipoleUpper6
+GW	9	13	0.3077991632169259-feed_length	-0.5*(lambdaMax*0.5)*(thao)^8	0	0.3077991632169259-feed_length	0.5*(lambdaMax*0.5)*(thao)^8	0	dmax	'DipoleUpper5
+GW	10	11.0	0.338133781327266-feed_length	-0.5*(lambdaMax*0.5)*(thao)^9	0	0.338133781327266-feed_length	0.5*(lambdaMax*0.5)*(thao)^9	0	dmax	'DipoleUpper4
+GW	11	11.0	0.36695166853208905-feed_length	-0.5*(lambdaMax*0.5)*(thao)^10	0	0.36695166853208905-feed_length	0.5*(lambdaMax*0.5)*(thao)^10	0	dmax	'DipoleUpper3
+GW	12	11	0.394328661376671-feed_length	-0.5*(lambdaMax*0.5)*(thao)^11	0	0.394328661376671-feed_length	0.5*(lambdaMax*0.5)*(thao)^11	0	dmax	'DipoleUpper2
+GW	13	9.0	0.4203368045790239-feed_length	-0.5*(lambdaMax*0.5)*(thao)^12	0	0.4203368045790239-feed_length	0.5*(lambdaMax*0.5)*(thao)^12	0	dmax	'DipoleUpper1
+GW	14	1	-feed_length-Z_term	2*dmax	0	-feed_length-Z_term	-2*dmax	0	dmax	'DownZ_term
+GW	15	1	0.4203368045790239	-2*dmax	0	0.4203368045790239	2*dmax	0	dmax	'FeedLine
 GE	0
 GN	-1
 EK
-EX	0	28	2	0	1	0	1	0	0
-TL	28	1	26	1	50	0	0	0	0	0
-TL	28	3	25	1	50	0	0	0	0	0
-TL	27	1	1	1	50	0	0	0	0	0
-TL	27	3	2	1	50	0	0	0	0	0
-TL	1	1	4	1	50	0	0	0	0	0
-TL	2	1	3	1	50	0	0	0	0	0
-TL	3	1	6	1	50	0	0	0	0	0
-TL	4	1	5	1	50	0	0	0	0	0
-TL	5	1	8	1	50	0	0	0	0	0
-TL	6	1	7	1	50	0	0	0	0	0
-TL	7	1	10	1	50	0	0	0	0	0
-TL	8	1	9	1	50	0	0	0	0	0
-TL	9	1	12	1	50	0	0	0	0	0
-TL	10	1	11	1	50	0	0	0	0	0
-TL	11	1	14	1	50	0	0	0	0	0
-TL	12	1	13	1	50	0	0	0	0	0
-TL	13	1	16	1	50	0	0	0	0	0
-TL	14	1	15	1	50	0	0	0	0	0
-TL	15	1	18	1	50	0	0	0	0	0
-TL	16	1	17	1	50	0	0	0	0	0
-TL	17	1	20	1	50	0	0	0	0	0
-TL	18	1	19	1	50	0	0	0	0	0
-TL	19	1	22	1	50	0	0	0	0	0
-TL	20	1	21	1	50	0	0	0	0	0
-TL	21	1	24	1	50	0	0	0	0	0
-TL	22	1	23	1	50	0	0	0	0	0
-TL	23	1	26	1	50	0	0	0	0	0
-TL	24	1	25	1	50	0	0	0	0	0
+EX	0	15	2	0	1	0	1	0	0
+TL	15	1	13	5	50	0	0	0	0	0
+TL	14	1	1	10	50	0	0	0	0	0
+TL	1	10	2	9	50	0	0	0	0	0
+TL	2	9	3	9	50	0	0	0	0	0
+TL	3	9	4	8	50	0	0	0	0	0
+TL	4	8	5	8	50	0	0	0	0	0
+TL	5	8	6	8	50	0	0	0	0	0
+TL	6	8	7	7	50	0	0	0	0	0
+TL	7	7	8	7	50	0	0	0	0	0
+TL	8	7	9	7	50	0	0	0	0	0
+TL	9	7	10	6	50	0	0	0	0	0
+TL	10	6	11	6	50	0	0	0	0	0
+TL	11	6	12	6	50	0	0	0	0	0
+TL	12	6	13	5	50	0	0	0	0	0
 FR	0	0	0	0	1400
 EN

@@ -1,3 +1,5 @@
+import math
+
 import matplotlib.pyplot as plt
 import numpy as np 
 from tkinter import *
@@ -254,28 +256,35 @@ def calculations():
     f.write("SY\ts="+str(s)+"\n")
 
     tag = 1
+    segmentsVector = []
     while (i<len(Dipolelengths)):
+        seg = np.floor(((lambdaMax * 0.5) * (thao) ** i)/s)
+        if (seg % 2 == 0):
+            seg = int(seg + 1)
+        round = int(seg/2) + 1
+        segmentsVector.append(round)
 
         if (i==0):
+
             #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
-            f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\ts/2\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+            f.write("GW\t"+str(tag)+"\t"+str(seg)+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
             tag += 1
-            f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\t-s/2\t0\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
-            tag += 1
+            #f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\t-s/2\t0\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
+            #tag += 1
         else:
             #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
-            f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\ts/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+            f.write("GW\t"+str(tag)+"\t"+str(seg)+"\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t"+str(Xcoor[i-1])+"-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
             tag += 1
-            f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
-            tag += 1
+            #f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
+            #tag += 1
 
 
         print("l"+str(int(i+1))+" =", Dipolelengths[i], "    s =", s)
         i += 1
 
-    f.write("GW\t"+str(tag)+"\t3\t-feed_length-Z_term\t7*dmax\t0\t-feed_length-Z_term\t-7*dmax\t0\tdmax\t'DownZ_term\n")
+    f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\t2*dmax\t0\t-feed_length-Z_term\t-2*dmax\t0\tdmax\t'DownZ_term\n")
     tag += 1
-    f.write("GW\t"+str(tag)+"\t3\t"+str(Xcoor[len(Xcoor)-1])+"\t-7*dmax\t0\t"+str(Xcoor[len(Xcoor)-1])+"\t7*dmax\t0\tdmax\t'FeedLine\n")
+    f.write("GW\t"+str(tag)+"\t1\t"+str(Xcoor[len(Xcoor)-1])+"\t-2*dmax\t0\t"+str(Xcoor[len(Xcoor)-1])+"\t2*dmax\t0\tdmax\t'FeedLine\n")
     print("")
     print("\033[1;33m"+"Distances: "+'\033[0;m')
 
@@ -295,26 +304,29 @@ def calculations():
     #     Voltage TAG SEG OPT REAL IMAG MAGN PHASE 
     f.write("EX\t0\t"+str(tag)+"\t2\t0\t1\t0\t1\t0\t0\n")
 
-    f.write("TL\t"+str(tag)+"\t1\t"+str(tag-2)+"\t1\t50\t0\t0\t0\t0\t0\n")
-    f.write("TL\t"+str(tag)+"\t3\t"+str(tag-3)+"\t1\t50\t0\t0\t0\t0\t0\n")
 
-    f.write("TL\t"+str(tag-1)+"\t1\t"+str(1)+"\t1\t50\t0\t0\t0\t0\t0\n")
-    f.write("TL\t"+str(tag-1)+"\t3\t"+str(2)+"\t1\t50\t0\t0\t0\t0\t0\n")
+    #Z-LINE
+    f.write("TL\t"+str(tag)+"\t1\t"+str(tag-2)+"\t"+str(segmentsVector[tag-3])+"\t50\t0\t0\t0\t0\t0\n")
+    #f.write("TL\t"+str(tag)+"\t3\t"+str(tag-3)+"\t1\t50\t0\t0\t0\t0\t0\n")
+
+    #VOLTAGE SOURCE
+    f.write("TL\t"+str(tag-1)+"\t1\t"+str(1)+"\t"+str(segmentsVector[0])+"\t50\t0\t0\t0\t0\t0\n")
+    #f.write("TL\t"+str(tag-1)+"\t3\t"+str(2)+"\t1\t50\t0\t0\t0\t0\t0\n")
 
     tag = 1
     while (i<len(d)):
         
         Y_Spacing.append(s)
         print ("l"+str(int(i+1))+" to l"+str(int(i+2))+" = ", d[i], " @ Xcoor = ", Xcoor[i])
-        i += 1
+
 
         #TL SEG_1 ANCHO SEG_2 ANCHO Z0 0 1e+99 1e+99 1e+99 1e+99
         #TL 1 s_w 2 s_w 50 0 1e+99 1e+99 1e+99 1e+99
-        
-        f.write("TL\t"+str(tag)+"\t1\t"+str(tag+3)+"\t1\t50\t0\t0\t0\t0\t0\n")
-        f.write("TL\t"+str(tag+1)+"\t1\t"+str(tag+2)+"\t1\t50\t0\t0\t0\t0\t0\n")
 
-        tag += 2 
+        f.write("TL\t"+str(tag)+"\t"+str(segmentsVector[i])+"\t"+str(tag+1)+"\t"+str(segmentsVector[i+1])+"\t50\t0\t0\t0\t0\t0\n")
+        #f.write("TL\t"+str(tag+1)+"\t1\t"+str(tag+2)+"\t1\t50\t0\t0\t0\t0\t0\n")
+        i += 1
+        tag += 1
 
     
     #print("\033[1;33m"+"Xcoor ="+'\033[0;m',Xcoor)
