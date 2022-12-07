@@ -1,0 +1,52 @@
+CM
+CE
+SY	fmin=1180000000
+SY	fmax=1700000000
+SY	alpha=4.832587717756317
+SY	cotalpha=11.82799999999999
+SY	c=300000000
+SY	B=fmax/fmin
+SY	thao=0.94
+SY	sigma=0.17742
+SY	N=13
+SY	dmax=0.0025
+SY	Z_term=0.03177966101694915
+SY	feed_length=0.1
+SY	lambdaMax=0.2542372881355932
+SY	segments=5
+SY	s=0.008540471074158559
+GW	1	15	-feed_length	-0.5*(lambdaMax*0.5)*(thao)^0	0	-feed_length	0.5*(lambdaMax*0.5)*(thao)^0	0	dmax	'DipoleUpper13
+GW	2	13	0.04510677966101694-feed_length	0.5*(lambdaMax*0.5)*(thao)^1	0	0.04510677966101694-feed_length	-0.5*(lambdaMax*0.5)*(thao)^1	0	dmax	'DipoleUpper12
+GW	3	13	0.08750715254237286-feed_length	-0.5*(lambdaMax*0.5)*(thao)^2	0	0.08750715254237286-feed_length	0.5*(lambdaMax*0.5)*(thao)^2	0	dmax	'DipoleUpper11
+GW	4	13	0.12736350305084743-feed_length	0.5*(lambdaMax*0.5)*(thao)^3	0	0.12736350305084743-feed_length	-0.5*(lambdaMax*0.5)*(thao)^3	0	dmax	'DipoleUpper10
+GW	5	11	0.16482847252881355-feed_length	-0.5*(lambdaMax*0.5)*(thao)^4	0	0.16482847252881355-feed_length	0.5*(lambdaMax*0.5)*(thao)^4	0	dmax	'DipoleUpper9
+GW	6	11	0.20004554383810172-feed_length	0.5*(lambdaMax*0.5)*(thao)^5	0	0.20004554383810172-feed_length	-0.5*(lambdaMax*0.5)*(thao)^5	0	dmax	'DipoleUpper8
+GW	7	11	0.2331495908688326-feed_length	-0.5*(lambdaMax*0.5)*(thao)^6	0	0.2331495908688326-feed_length	0.5*(lambdaMax*0.5)*(thao)^6	0	dmax	'DipoleUpper7
+GW	8	9	0.2642673950777195-feed_length	0.5*(lambdaMax*0.5)*(thao)^7	0	0.2642673950777195-feed_length	-0.5*(lambdaMax*0.5)*(thao)^7	0	dmax	'DipoleUpper6
+GW	9	9	0.29351813103407337-feed_length	-0.5*(lambdaMax*0.5)*(thao)^8	0	0.29351813103407337-feed_length	0.5*(lambdaMax*0.5)*(thao)^8	0	dmax	'DipoleUpper5
+GW	10	9	0.32101382283304586-feed_length	0.5*(lambdaMax*0.5)*(thao)^9	0	0.32101382283304586-feed_length	-0.5*(lambdaMax*0.5)*(thao)^9	0	dmax	'DipoleUpper4
+GW	11	9	0.34685977312408006-feed_length	-0.5*(lambdaMax*0.5)*(thao)^10	0	0.34685977312408006-feed_length	0.5*(lambdaMax*0.5)*(thao)^10	0	dmax	'DipoleUpper3
+GW	12	7	0.3711549663976523-feed_length	0.5*(lambdaMax*0.5)*(thao)^11	0	0.3711549663976523-feed_length	-0.5*(lambdaMax*0.5)*(thao)^11	0	dmax	'DipoleUpper2
+GW	13	7	0.39399244807481004-feed_length	-0.5*(lambdaMax*0.5)*(thao)^12	0	0.39399244807481004-feed_length	0.5*(lambdaMax*0.5)*(thao)^12	0	dmax	'DipoleUpper1
+GW	14	1	-feed_length-Z_term	2*dmax	0	-feed_length-Z_term	-2*dmax	0	dmax	'DownZ_term
+GW	15	1	0.39399244807481004	-2*dmax	0	0.39399244807481004	2*dmax	0	dmax	'FeedLine
+GE	0
+GN	-1
+EK
+EX	0	15	1	0	1	0	1	0	0
+TL	15	1	13	4	50	0	0	0	0	0
+TL	14	1	1	8	50	0	0	0	0	0
+TL	1	8	2	7	50	0	0	0	0	0
+TL	2	7	3	7	50	0	0	0	0	0
+TL	3	7	4	7	50	0	0	0	0	0
+TL	4	7	5	6	50	0	0	0	0	0
+TL	5	6	6	6	50	0	0	0	0	0
+TL	6	6	7	6	50	0	0	0	0	0
+TL	7	6	8	5	50	0	0	0	0	0
+TL	8	5	9	5	50	0	0	0	0	0
+TL	9	5	10	5	50	0	0	0	0	0
+TL	10	5	11	5	50	0	0	0	0	0
+TL	11	5	12	4	50	0	0	0	0	0
+TL	12	4	13	4	50	0	0	0	0	0
+FR	0	0	0	0	1400
+EN

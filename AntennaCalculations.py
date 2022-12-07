@@ -258,9 +258,11 @@ def calculations():
     tag = 1
     segmentsVector = []
     while (i<len(Dipolelengths)):
-        seg = np.floor(((lambdaMax * 0.5) * (thao) ** i)/s)
+        seg = np.floor(Dipolelengths[i]/s)
         if (seg % 2 == 0):
             seg = int(seg + 1)
+
+        #MID POINT TO PUT THE T-LINE
         round = int(seg/2) + 1
         segmentsVector.append(round)
 
@@ -289,7 +291,7 @@ def calculations():
                 #tag += 1
 
 
-        print("l"+str(int(i+1))+" =", Dipolelengths[i], "    s =", s)
+        print("l"+str(int(i+1))+" =", Dipolelengths[i], "    s =", s, " segments = ", seg, "segments/2 = ", segmentsVector[i])
         i += 1
 
     f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\t2*dmax\t0\t-feed_length-Z_term\t-2*dmax\t0\tdmax\t'DownZ_term\n")

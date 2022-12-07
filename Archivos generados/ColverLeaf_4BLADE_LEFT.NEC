@@ -1,0 +1,118 @@
+CM 
+CE
+SY f=5580000000	'Frequency [Hz]
+SY c=300000000	'Light's velocity [m/s]
+SY lambda=c/f	'Wavelength [m]
+SY lambda_quart=lambda/4	'Quarter wave length [m]
+SY phi=90	'Phi angle (X-Y) [°]
+SY theta=40	'Theta angle (X-Z)  [°]
+SY spacing=0	'Angle spacing between blades [°]
+SY mast = 0.001	'mast elevation [m]
+SY step_phi= (phi-spacing)/20	'Steps to configure the arc (phi) [°]
+SY step_theta=theta/20	'Steps to configure the arc (theta) [°]
+SY length=lambda_quart	'Bars length [m]
+SY radius=0.0006	'Radius length [m]
+SY s_w=12	'Segments for the wires and bars [-]
+SY s_a=2	'Segments for the arcs [-]
+SY feed=3	'Segments of the feeding wire [m]
+SY step_mast=(mast+length*sin(theta))/20	'Segments of the mast [m]
+SY factor=1
+SY step_factor=(1-factor)/7
+GW	1	s_w	0	0	0	length	0	0	radius	'Down bar
+GW	2	s_w	0	0	0	length*cos(phi)	length*sin(phi)	0	radius	'Down bar
+GW	3	s_w	0	0	0	length*cos(2*phi)	length*sin(2*phi)	0	radius	'Down bar
+GW	71	s_w	0	0	0	length*cos(3*phi)	length*sin(3*phi)	0	radius	'Down bar
+GW	4	s_w	0	0	mast	length*cos(theta)*cos(360-spacing)	length*sin(360-spacing)*cos(theta)	mast+length*sin(theta)	radius	'Elevated bar
+GW	5	s_w	0	0	mast	length*cos((phi-spacing))*cos(theta)	length*sin((phi-spacing))*cos(theta)	mast+length*sin(theta)	radius	'Elevated bar
+GW	6	s_w	0	0	mast	length*cos((2*phi-spacing))*cos(theta)	length*sin((2*phi-spacing))*cos(theta)	mast+length*sin(theta)	radius	'Elevated bar
+GW	72	s_w	0	0	mast	length*cos((3*phi-spacing))*cos(theta)	length*sin((3*phi-spacing))*cos(theta)	mast+length*sin(theta)	radius	'Down bar
+GW	7	s_a	length*cos(step_phi*0)*cos(20*(theta/20))	length*sin(step_phi*0)*cos(20*(theta/20))	step_mast*20	length*cos(step_phi*1 )*cos(19*(theta/20))	length*sin(step_phi*1)*cos(19*(theta/20))	step_mast*19	radius	'Arc 1-2
+GW	8	s_a	length*cos(step_phi*1)*cos(19*(theta/20))	length*sin(step_phi*1)*cos(19*(theta/20))	step_mast*19	length*cos(step_phi*2 )*cos(18*(theta/20))	length*sin(step_phi*2)*cos(18*(theta/20))	step_mast*18	radius	'Arc 1-2
+GW	9	s_a	length*cos(step_phi*2)*cos(18*(theta/20))	length*sin(step_phi*2)*cos(18*(theta/20))	step_mast*18	length*cos(step_phi*3 )*cos(17*(theta/20))	length*sin(step_phi*3)*cos(17*(theta/20))	step_mast*17	radius	'Arc 1-2
+GW	10	s_a	length*cos(step_phi*3)*cos(17*(theta/20))	length*sin(step_phi*3)*cos(17*(theta/20))	step_mast*17	length*cos(step_phi*4 )*cos(16*(theta/20))	length*sin(step_phi*4)*cos(16*(theta/20))	step_mast*16	radius	'Arc 1-2
+GW	11	s_a	length*cos(step_phi*4)*cos(16*(theta/20))	length*sin(step_phi*4)*cos(16*(theta/20))	step_mast*16	length*cos(step_phi*5 )*cos(15*(theta/20))	length*sin(step_phi*5)*cos(15*(theta/20))	step_mast*15	radius	'Arc 1-2
+GW	12	s_a	length*cos(step_phi*5)*cos(15*(theta/20))	length*sin(step_phi*5)*cos(15*(theta/20))	step_mast*15	length*cos(step_phi*6 )*cos(14*(theta/20))	length*sin(step_phi*6)*cos(14*(theta/20))	step_mast*14	radius	'Arc 1-2
+GW	13	s_a	length*cos(step_phi*6)*cos(14*(theta/20))	length*sin(step_phi*6)*cos(14*(theta/20))	step_mast*14	length*cos(step_phi*7 )*cos(13*(theta/20))	length*sin(step_phi*7)*cos(13*(theta/20))	step_mast*13	radius	'Arc 1-2
+GW	14	s_a	length*cos(step_phi*7)*cos(13*(theta/20))	length*sin(step_phi*7)*cos(13*(theta/20))	step_mast*13	length*cos(step_phi*8 )*cos(12*(theta/20))	length*sin(step_phi*8)*cos(12*(theta/20))	step_mast*12	radius	'Arc 1-2
+GW	15	s_a	length*cos(step_phi*8)*cos(12*(theta/20))	length*sin(step_phi*8)*cos(12*(theta/20))	step_mast*12	length*cos(step_phi*9 )*cos(11*(theta/20))	length*sin(step_phi*9)*cos(11*(theta/20))	step_mast*11	radius	'Arc 1-2
+GW	16	s_a	length*cos(step_phi*9)*cos(11*(theta/20))	length*sin(step_phi*9)*cos(11*(theta/20))	step_mast*11	length*cos(step_phi*10)*cos(10*(theta/20))	length*sin(step_phi*10)*cos(10*(theta/20))	step_mast*10	radius	'Arc 1-2
+GW	17	s_a	length*cos(step_phi*10)*cos(10*(theta/20))	length*sin(step_phi*10)*cos(10*(theta/20))	step_mast*10	length*cos(step_phi*11)*cos(9*(theta/20))	length*sin(step_phi*11)*cos(9*(theta/20))	step_mast*9	radius	'Arc 1-2
+GW	18	s_a	length*cos(step_phi*11)*cos(9*(theta/20))	length*sin(step_phi*11)*cos(9*(theta/20))	step_mast*9	length*cos(step_phi*12)*cos(8*(theta/20))	length*sin(step_phi*12)*cos(8*(theta/20))	step_mast*8	radius	'Arc 1-2
+GW	19	s_a	length*cos(step_phi*12)*cos(8*(theta/20))	length*sin(step_phi*12)*cos(8*(theta/20))	step_mast*8	length*cos(step_phi*13)*cos(7*(theta/20))	length*sin(step_phi*13)*cos(7*(theta/20))	step_mast*7	radius	'Arc 1-2
+GW	20	s_a	length*cos(step_phi*13)*cos(7*(theta/20))	length*sin(step_phi*13)*cos(7*(theta/20))	step_mast*7	length*cos(step_phi*14)*cos(6*(theta/20))	length*sin(step_phi*14)*cos(6*(theta/20))	step_mast*6	radius	'Arc 1-2
+GW	21	s_a	length*cos(step_phi*14)*cos(6*(theta/20))	length*sin(step_phi*14)*cos(6*(theta/20))	step_mast*6	length*cos(step_phi*15)*cos(5*(theta/20))	length*sin(step_phi*15)*cos(5*(theta/20))	step_mast*5	radius	'Arc 1-2
+GW	22	s_a	length*cos(step_phi*15)*cos(5*(theta/20))	length*sin(step_phi*15)*cos(5*(theta/20))	step_mast*5	length*cos(step_phi*16)*cos(4*(theta/20))	length*sin(step_phi*16)*cos(4*(theta/20))	step_mast*4	radius	'Arc 1-2
+GW	23	s_a	length*cos(step_phi*16)*cos(4*(theta/20))	length*sin(step_phi*16)*cos(4*(theta/20))	step_mast*4	length*cos(step_phi*17)*cos(3*(theta/20))	length*sin(step_phi*17)*cos(3*(theta/20))	step_mast*3	radius	'Arc 1-2
+GW	24	s_a	length*cos(step_phi*17)*cos(3*(theta/20))	length*sin(step_phi*17)*cos(3*(theta/20))	step_mast*3	length*cos(step_phi*18)*cos(2*(theta/20))	length*sin(step_phi*18)*cos(2*(theta/20))	step_mast*2	radius	'Arc 1-2
+GW	25	s_a	length*cos(step_phi*18)*cos(2*(theta/20))	length*sin(step_phi*18)*cos(2*(theta/20))	step_mast*2	length*cos(step_phi*19)*cos(1*(theta/20))	length*sin(step_phi*19)*cos(1*(theta/20))	step_mast*1	radius	'Arc 1-2
+GW	26	s_a	length*cos(step_phi*19)*cos(1*(theta/20))	length*sin(step_phi*19)*cos(1*(theta/20))	step_mast*1	length*cos(step_phi*20)*cos(0*(theta/20))	length*sin(step_phi*20)*cos(0*(theta/20))	step_mast*0	radius	'Arc 1-2
+GW	28	s_a	length*cos(step_phi*0+phi)*cos(20*(theta/20))	length*sin(step_phi*0+phi)*cos(20*(theta/20))	step_mast*20	length*cos(step_phi*1+phi)*cos(19*(theta/20))	length*sin(step_phi*1+phi)*cos(19*(theta/20))	step_mast*19	radius	'Arc 2-3
+GW	29	s_a	length*cos(step_phi*1+phi)*cos(19*(theta/20))	length*sin(step_phi*1+phi)*cos(19*(theta/20))	step_mast*19	length*cos(step_phi*2+phi)*cos(18*(theta/20))	length*sin(step_phi*2+phi)*cos(18*(theta/20))	step_mast*18	radius	'Arc 2-3
+GW	30	s_a	length*cos(step_phi*2+phi)*cos(18*(theta/20))	length*sin(step_phi*2+phi)*cos(18*(theta/20))	step_mast*18	length*cos(step_phi*3+phi)*cos(17*(theta/20))	length*sin(step_phi*3+phi)*cos(17*(theta/20))	step_mast*17	radius	'Arc 2-3
+GW	31	s_a	length*cos(step_phi*3+phi)*cos(17*(theta/20))	length*sin(step_phi*3+phi)*cos(17*(theta/20))	step_mast*17	length*cos(step_phi*4+phi)*cos(16*(theta/20))	length*sin(step_phi*4+phi)*cos(16*(theta/20))	step_mast*16	radius	'Arc 2-3
+GW	32	s_a	length*cos(step_phi*4+phi)*cos(16*(theta/20))	length*sin(step_phi*4+phi)*cos(16*(theta/20))	step_mast*16	length*cos(step_phi*5+phi)*cos(15*(theta/20))	length*sin(step_phi*5+phi)*cos(15*(theta/20))	step_mast*15	radius	'Arc 2-3
+GW	33	s_a	length*cos(step_phi*5+phi)*cos(15*(theta/20))	length*sin(step_phi*5+phi)*cos(15*(theta/20))	step_mast*15	length*cos(step_phi*6+phi)*cos(14*(theta/20))	length*sin(step_phi*6+phi)*cos(14*(theta/20))	step_mast*14	radius	'Arc 2-3
+GW	34	s_a	length*cos(step_phi*6+phi)*cos(14*(theta/20))	length*sin(step_phi*6+phi)*cos(14*(theta/20))	step_mast*14	length*cos(step_phi*7+phi)*cos(13*(theta/20))	length*sin(step_phi*7+phi)*cos(13*(theta/20))	step_mast*13	radius	'Arc 2-3
+GW	35	s_a	length*cos(step_phi*7+phi)*cos(13*(theta/20))	length*sin(step_phi*7+phi)*cos(13*(theta/20))	step_mast*13	length*cos(step_phi*8+phi)*cos(12*(theta/20))	length*sin(step_phi*8+phi)*cos(12*(theta/20))	step_mast*12	radius	'Arc 2-3
+GW	36	s_a	length*cos(step_phi*8+phi)*cos(12*(theta/20))	length*sin(step_phi*8+phi)*cos(12*(theta/20))	step_mast*12	length*cos(step_phi*9+phi)*cos(11*(theta/20))	length*sin(step_phi*9+phi)*cos(11*(theta/20))	step_mast*11	radius	'Arc 2-3
+GW	37	s_a	length*cos(step_phi*9+phi)*cos(11*(theta/20))	length*sin(step_phi*9+phi)*cos(11*(theta/20))	step_mast*11	length*cos(step_phi*10+phi)*cos(10*(theta/20))	length*sin(step_phi*10+phi)*cos(10*(theta/20))	step_mast*10	radius	'Arc 2-3
+GW	38	s_a	length*cos(step_phi*10+phi)*cos(10*(theta/20))	length*sin(step_phi*10+phi)*cos(10*(theta/20))	step_mast*10	length*cos(step_phi*11+phi)*cos(9*(theta/20))	length*sin(step_phi*11+phi)*cos(9*(theta/20))	step_mast*9	radius	'Arc 2-3
+GW	39	s_a	length*cos(step_phi*11+phi)*cos(9*(theta/20))	length*sin(step_phi*11+phi)*cos(9*(theta/20))	step_mast*9	length*cos(step_phi*12+phi)*cos(8*(theta/20))	length*sin(step_phi*12+phi)*cos(8*(theta/20))	step_mast*8	radius	'Arc 2-3
+GW	40	s_a	length*cos(step_phi*12+phi)*cos(8*(theta/20))	length*sin(step_phi*12+phi)*cos(8*(theta/20))	step_mast*8	length*cos(step_phi*13+phi)*cos(7*(theta/20))	length*sin(step_phi*13+phi)*cos(7*(theta/20))	step_mast*7	radius	'Arc 2-3
+GW	41	s_a	length*cos(step_phi*13+phi)*cos(7*(theta/20))	length*sin(step_phi*13+phi)*cos(7*(theta/20))	step_mast*7	length*cos(step_phi*14+phi)*cos(6*(theta/20))	length*sin(step_phi*14+phi)*cos(6*(theta/20))	step_mast*6	radius	'Arc 2-3
+GW	42	s_a	length*cos(step_phi*14+phi)*cos(6*(theta/20))	length*sin(step_phi*14+phi)*cos(6*(theta/20))	step_mast*6	length*cos(step_phi*15+phi)*cos(5*(theta/20))	length*sin(step_phi*15+phi)*cos(5*(theta/20))	step_mast*5	radius	'Arc 2-3
+GW	43	s_a	length*cos(step_phi*15+phi)*cos(5*(theta/20))	length*sin(step_phi*15+phi)*cos(5*(theta/20))	step_mast*5	length*cos(step_phi*16+phi)*cos(4*(theta/20))	length*sin(step_phi*16+phi)*cos(4*(theta/20))	step_mast*4	radius	'Arc 2-3
+GW	44	s_a	length*cos(step_phi*16+phi)*cos(4*(theta/20))	length*sin(step_phi*16+phi)*cos(4*(theta/20))	step_mast*4	length*cos(step_phi*17+phi)*cos(3*(theta/20))	length*sin(step_phi*17+phi)*cos(3*(theta/20))	step_mast*3	radius	'Arc 2-3
+GW	45	s_a	length*cos(step_phi*17+phi)*cos(3*(theta/20))	length*sin(step_phi*17+phi)*cos(3*(theta/20))	step_mast*3	length*cos(step_phi*18+phi)*cos(2*(theta/20))	length*sin(step_phi*18+phi)*cos(2*(theta/20))	step_mast*2	radius	'Arc 2-3
+GW	46	s_a	length*cos(step_phi*18+phi)*cos(2*(theta/20))	length*sin(step_phi*18+phi)*cos(2*(theta/20))	step_mast*2	length*cos(step_phi*19+phi)*cos(1*(theta/20))	length*sin(step_phi*19+phi)*cos(1*(theta/20))	step_mast*1	radius	'Arc 2-3
+GW	47	s_a	length*cos(step_phi*19+phi)*cos(1*(theta/20))	length*sin(step_phi*19+phi)*cos(1*(theta/20))	step_mast*1	length*cos(step_phi*20+phi)*cos(0*(theta/20))	length*sin(step_phi*20+phi)*cos(0*(theta/20))	step_mast*0	radius	'Arc 2-3
+GW	49	s_a	length*cos(step_phi*0+phi*2)*cos(20*(theta/20))	length*sin(step_phi*0+phi*2)*cos(20*(theta/20))	step_mast*20	length*cos(step_phi*1+phi*2)*cos(19*(theta/20))	length*sin(step_phi*1+phi*2)*cos(19*(theta/20))	step_mast*19	radius	'Arc 3-1
+GW	50	s_a	length*cos(step_phi*1+phi*2)*cos(19*(theta/20))	length*sin(step_phi*1+phi*2)*cos(19*(theta/20))	step_mast*19	length*cos(step_phi*2+phi*2)*cos(18*(theta/20))	length*sin(step_phi*2+phi*2)*cos(18*(theta/20))	step_mast*18	radius	'Arc 3-1
+GW	51	s_a	length*cos(step_phi*2+phi*2)*cos(18*(theta/20))	length*sin(step_phi*2+phi*2)*cos(18*(theta/20))	step_mast*18	length*cos(step_phi*3+phi*2)*cos(17*(theta/20))	length*sin(step_phi*3+phi*2)*cos(17*(theta/20))	step_mast*17	radius	'Arc 3-1
+GW	52	s_a	length*cos(step_phi*3+phi*2)*cos(17*(theta/20))	length*sin(step_phi*3+phi*2)*cos(17*(theta/20))	step_mast*17	length*cos(step_phi*4+phi*2)*cos(16*(theta/20))	length*sin(step_phi*4+phi*2)*cos(16*(theta/20))	step_mast*16	radius	'Arc 3-1
+GW	53	s_a	length*cos(step_phi*4+phi*2)*cos(16*(theta/20))	length*sin(step_phi*4+phi*2)*cos(16*(theta/20))	step_mast*16	length*cos(step_phi*5+phi*2)*cos(15*(theta/20))	length*sin(step_phi*5+phi*2)*cos(15*(theta/20))	step_mast*15	radius	'Arc 3-1
+GW	54	s_a	length*cos(step_phi*5+phi*2)*cos(15*(theta/20))	length*sin(step_phi*5+phi*2)*cos(15*(theta/20))	step_mast*15	length*cos(step_phi*6+phi*2)*cos(14*(theta/20))	length*sin(step_phi*6+phi*2)*cos(14*(theta/20))	step_mast*14	radius	'Arc 3-1
+GW	55	s_a	length*cos(step_phi*6+phi*2)*cos(14*(theta/20))	length*sin(step_phi*6+phi*2)*cos(14*(theta/20))	step_mast*14	length*cos(step_phi*7+phi*2)*cos(13*(theta/20))	length*sin(step_phi*7+phi*2)*cos(13*(theta/20))	step_mast*13	radius	'Arc 3-1
+GW	56	s_a	length*cos(step_phi*7+phi*2)*cos(13*(theta/20))	length*sin(step_phi*7+phi*2)*cos(13*(theta/20))	step_mast*13	length*cos(step_phi*8+phi*2)*cos(12*(theta/20))	length*sin(step_phi*8+phi*2)*cos(12*(theta/20))	step_mast*12	radius	'Arc 3-1
+GW	57	s_a	length*cos(step_phi*8+phi*2)*cos(12*(theta/20))	length*sin(step_phi*8+phi*2)*cos(12*(theta/20))	step_mast*12	length*cos(step_phi*9+phi*2)*cos(11*(theta/20))	length*sin(step_phi*9+phi*2)*cos(11*(theta/20))	step_mast*11	radius	'Arc 3-1
+GW	58	s_a	length*cos(step_phi*9+phi*2)*cos(11*(theta/20))	length*sin(step_phi*9+phi*2)*cos(11*(theta/20))	step_mast*11	length*cos(step_phi*10+phi*2)*cos(10*(theta/20))	length*sin(step_phi*10+phi*2)*cos(10*(theta/20))	step_mast*10	radius	'Arc 3-1
+GW	59	s_a	length*cos(step_phi*10+phi*2)*cos(10*(theta/20))	length*sin(step_phi*10+phi*2)*cos(10*(theta/20))	step_mast*10	length*cos(step_phi*11+phi*2)*cos(9*(theta/20))	length*sin(step_phi*11+phi*2)*cos(9*(theta/20))	step_mast*9	radius	'Arc 3-1
+GW	60	s_a	length*cos(step_phi*11+phi*2)*cos(9*(theta/20))	length*sin(step_phi*11+phi*2)*cos(9*(theta/20))	step_mast*9	length*cos(step_phi*12+phi*2)*cos(8*(theta/20))	length*sin(step_phi*12+phi*2)*cos(8*(theta/20))	step_mast*8	radius	'Arc 3-1
+GW	61	s_a	length*cos(step_phi*12+phi*2)*cos(8*(theta/20))	length*sin(step_phi*12+phi*2)*cos(8*(theta/20))	step_mast*8	length*cos(step_phi*13+phi*2)*cos(7*(theta/20))	length*sin(step_phi*13+phi*2)*cos(7*(theta/20))	step_mast*7	radius	'Arc 3-1
+GW	62	s_a	length*cos(step_phi*13+phi*2)*cos(7*(theta/20))	length*sin(step_phi*13+phi*2)*cos(7*(theta/20))	step_mast*7	length*cos(step_phi*14+phi*2)*cos(6*(theta/20))	length*sin(step_phi*14+phi*2)*cos(6*(theta/20))	step_mast*6	radius	'Arc 3-1
+GW	63	s_a	length*cos(step_phi*14+phi*2)*cos(6*(theta/20))	length*sin(step_phi*14+phi*2)*cos(6*(theta/20))	step_mast*6	length*cos(step_phi*15+phi*2)*cos(5*(theta/20))	length*sin(step_phi*15+phi*2)*cos(5*(theta/20))	step_mast*5	radius	'Arc 3-1
+GW	64	s_a	length*cos(step_phi*15+phi*2)*cos(5*(theta/20))	length*sin(step_phi*15+phi*2)*cos(5*(theta/20))	step_mast*5	length*cos(step_phi*16+phi*2)*cos(4*(theta/20))	length*sin(step_phi*16+phi*2)*cos(4*(theta/20))	step_mast*4	radius	'Arc 3-1
+GW	65	s_a	length*cos(step_phi*16+phi*2)*cos(4*(theta/20))	length*sin(step_phi*16+phi*2)*cos(4*(theta/20))	step_mast*4	length*cos(step_phi*17+phi*2)*cos(3*(theta/20))	length*sin(step_phi*17+phi*2)*cos(3*(theta/20))	step_mast*3	radius	'Arc 3-1
+GW	66	s_a	length*cos(step_phi*17+phi*2)*cos(3*(theta/20))	length*sin(step_phi*17+phi*2)*cos(3*(theta/20))	step_mast*3	length*cos(step_phi*18+phi*2)*cos(2*(theta/20))	length*sin(step_phi*18+phi*2)*cos(2*(theta/20))	step_mast*2	radius	'Arc 3-1
+GW	67	s_a	length*cos(step_phi*18+phi*2)*cos(2*(theta/20))	length*sin(step_phi*18+phi*2)*cos(2*(theta/20))	step_mast*2	length*cos(step_phi*19+phi*2)*cos(1*(theta/20))	length*sin(step_phi*19+phi*2)*cos(1*(theta/20))	step_mast*1	radius	'Arc 3-1
+GW	68	s_a	length*cos(step_phi*19+phi*2)*cos(1*(theta/20))	length*sin(step_phi*19+phi*2)*cos(1*(theta/20))	step_mast*1	length*cos(step_phi*20+phi*2)*cos(0*(theta/20))	length*sin(step_phi*20+phi*2)*cos(0*(theta/20))	step_mast*0	radius	'Arc 3-1
+GW	70	feed	0	0	0	0	0	mast	radius	'Feed
+GW	73	s_a	length*cos(step_phi*0+phi*3)*cos(20*(theta/20))	length*sin(step_phi*0+phi*3)*cos(20*(theta/20))	step_mast*20	length*cos(step_phi*1+phi*3)*cos(19*(theta/20))	length*sin(step_phi*1+phi*3)*cos(19*(theta/20))	step_mast*19	radius	'Arc 3-1
+GW	74	s_a	length*cos(step_phi*1+phi*3)*cos(19*(theta/20))	length*sin(step_phi*1+phi*3)*cos(19*(theta/20))	step_mast*19	length*cos(step_phi*2+phi*3)*cos(18*(theta/20))	length*sin(step_phi*2+phi*3)*cos(18*(theta/20))	step_mast*18	radius	'Arc 3-1
+GW	75	s_a	length*cos(step_phi*2+phi*3)*cos(18*(theta/20))	length*sin(step_phi*2+phi*3)*cos(18*(theta/20))	step_mast*18	length*cos(step_phi*3+phi*3)*cos(17*(theta/20))	length*sin(step_phi*3+phi*3)*cos(17*(theta/20))	step_mast*17	radius	'Arc 3-1
+GW	76	s_a	length*cos(step_phi*3+phi*3)*cos(17*(theta/20))	length*sin(step_phi*3+phi*3)*cos(17*(theta/20))	step_mast*17	length*cos(step_phi*4+phi*3)*cos(16*(theta/20))	length*sin(step_phi*4+phi*3)*cos(16*(theta/20))	step_mast*16	radius	'Arc 3-1
+GW	77	s_a	length*cos(step_phi*4+phi*3)*cos(16*(theta/20))	length*sin(step_phi*4+phi*3)*cos(16*(theta/20))	step_mast*16	length*cos(step_phi*5+phi*3)*cos(15*(theta/20))	length*sin(step_phi*5+phi*3)*cos(15*(theta/20))	step_mast*15	radius	'Arc 3-1
+GW	78	s_a	length*cos(step_phi*5+phi*3)*cos(15*(theta/20))	length*sin(step_phi*5+phi*3)*cos(15*(theta/20))	step_mast*15	length*cos(step_phi*6+phi*3)*cos(14*(theta/20))	length*sin(step_phi*6+phi*3)*cos(14*(theta/20))	step_mast*14	radius	'Arc 3-1
+GW	79	s_a	length*cos(step_phi*6+phi*3)*cos(14*(theta/20))	length*sin(step_phi*6+phi*3)*cos(14*(theta/20))	step_mast*14	length*cos(step_phi*7+phi*3)*cos(13*(theta/20))	length*sin(step_phi*7+phi*3)*cos(13*(theta/20))	step_mast*13	radius	'Arc 3-1
+GW	80	s_a	length*cos(step_phi*7+phi*3)*cos(13*(theta/20))	length*sin(step_phi*7+phi*3)*cos(13*(theta/20))	step_mast*13	length*cos(step_phi*8+phi*3)*cos(12*(theta/20))	length*sin(step_phi*8+phi*3)*cos(12*(theta/20))	step_mast*12	radius	'Arc 3-1
+GW	81	s_a	length*cos(step_phi*8+phi*3)*cos(12*(theta/20))	length*sin(step_phi*8+phi*3)*cos(12*(theta/20))	step_mast*12	length*cos(step_phi*9+phi*3)*cos(11*(theta/20))	length*sin(step_phi*9+phi*3)*cos(11*(theta/20))	step_mast*11	radius	'Arc 3-1
+GW	82	s_a	length*cos(step_phi*9+phi*3)*cos(11*(theta/20))	length*sin(step_phi*9+phi*3)*cos(11*(theta/20))	step_mast*11	length*cos(step_phi*10+phi*3)*cos(10*(theta/20))	length*sin(step_phi*10+phi*3)*cos(10*(theta/20))	step_mast*10	radius	'Arc 3-1
+GW	83	s_a	length*cos(step_phi*10+phi*3)*cos(10*(theta/20))	length*sin(step_phi*10+phi*3)*cos(10*(theta/20))	step_mast*10	length*cos(step_phi*11+phi*3)*cos(9*(theta/20))	length*sin(step_phi*11+phi*3)*cos(9*(theta/20))	step_mast*9	radius	'Arc 3-1
+GW	84	s_a	length*cos(step_phi*11+phi*3)*cos(9*(theta/20))	length*sin(step_phi*11+phi*3)*cos(9*(theta/20))	step_mast*9	length*cos(step_phi*12+phi*3)*cos(8*(theta/20))	length*sin(step_phi*12+phi*3)*cos(8*(theta/20))	step_mast*8	radius	'Arc 3-1
+GW	85	s_a	length*cos(step_phi*12+phi*3)*cos(8*(theta/20))	length*sin(step_phi*12+phi*3)*cos(8*(theta/20))	step_mast*8	length*cos(step_phi*13+phi*3)*cos(7*(theta/20))	length*sin(step_phi*13+phi*3)*cos(7*(theta/20))	step_mast*7	radius	'Arc 3-1
+GW	86	s_a	length*cos(step_phi*13+phi*3)*cos(7*(theta/20))	length*sin(step_phi*13+phi*3)*cos(7*(theta/20))	step_mast*7	length*cos(step_phi*14+phi*3)*cos(6*(theta/20))	length*sin(step_phi*14+phi*3)*cos(6*(theta/20))	step_mast*6	radius	'Arc 3-1
+GW	87	s_a	length*cos(step_phi*14+phi*3)*cos(6*(theta/20))	length*sin(step_phi*14+phi*3)*cos(6*(theta/20))	step_mast*6	length*cos(step_phi*15+phi*3)*cos(5*(theta/20))	length*sin(step_phi*15+phi*3)*cos(5*(theta/20))	step_mast*5	radius	'Arc 3-1
+GW	88	s_a	length*cos(step_phi*15+phi*3)*cos(5*(theta/20))	length*sin(step_phi*15+phi*3)*cos(5*(theta/20))	step_mast*5	length*cos(step_phi*16+phi*3)*cos(4*(theta/20))	length*sin(step_phi*16+phi*3)*cos(4*(theta/20))	step_mast*4	radius	'Arc 3-1
+GW	89	s_a	length*cos(step_phi*16+phi*3)*cos(4*(theta/20))	length*sin(step_phi*16+phi*3)*cos(4*(theta/20))	step_mast*4	length*cos(step_phi*17+phi*3)*cos(3*(theta/20))	length*sin(step_phi*17+phi*3)*cos(3*(theta/20))	step_mast*3	radius	'Arc 3-1
+GW	90	s_a	length*cos(step_phi*17+phi*3)*cos(3*(theta/20))	length*sin(step_phi*17+phi*3)*cos(3*(theta/20))	step_mast*3	length*cos(step_phi*18+phi*3)*cos(2*(theta/20))	length*sin(step_phi*18+phi*3)*cos(2*(theta/20))	step_mast*2	radius	'Arc 3-1
+GW	91	s_a	length*cos(step_phi*18+phi*3)*cos(2*(theta/20))	length*sin(step_phi*18+phi*3)*cos(2*(theta/20))	step_mast*2	length*cos(step_phi*19+phi*3)*cos(1*(theta/20))	length*sin(step_phi*19+phi*3)*cos(1*(theta/20))	step_mast*1	radius	'Arc 3-1
+GW	92	s_a	length*cos(step_phi*19+phi*3)*cos(1*(theta/20))	length*sin(step_phi*19+phi*3)*cos(1*(theta/20))	step_mast*1	length*cos(step_phi*20+phi*3)*cos(0*(theta/20))	length*sin(step_phi*20+phi*3)*cos(0*(theta/20))	step_mast*0	radius	'Arc 3-1                                                       		
+GE	0
+GN	-1
+EK
+EX	0	70	2	0	1	0	0
+TL	1	s_w	2	s_w	50	0	1e+99	1e+99	1e+99	1e+99
+
+
+FR	0	0	0	0	5800	0
+EN
