@@ -71,8 +71,10 @@ Rin_entry = Entry(master, width=10)
 RinLbl.place(x=0, y=240)
 Rin_entry.place(x=180, y=240)
 
-ZoRinLbl = Label(master, text = "Zo/Rin value from graph: ")
-ZoRin_entry = Entry(master, width=10)
+SCoeffLbl = Label(master, text = "Spacing Coeff (default = 1)")
+SCoeff_entry = Entry(master, width=10)
+SCoeffLbl.place(x=0, y=280)
+SCoeff_entry.place(x=180, y=280)
 
 
 img = ImageTk.PhotoImage(Image.open("directivityGRAPH.jpg"))
@@ -102,6 +104,7 @@ dmax = 0.0
 Rin = 0.0
 Za = 0.0
 ZaRin = 0.0
+sCoeff = 0.0
 
 def calculations():
     
@@ -124,7 +127,8 @@ def calculations():
     global Rin 
     global Za 
     global ZaRin 
-    global dmax 
+    global dmax
+    global sCoeff
 
     try:
         fmax = float(maxfLbl_entry.get())*10**6
@@ -166,6 +170,11 @@ def calculations():
         Rin = float(Rin_entry.get())
     except:
         messagebox.showerror(title="ERROR",message="Incorrect value for Rin")
+
+    try:
+        sCoeff = float(SCoeff_entry.get())
+    except:
+        messagebox.showerror(title="ERROR", message="Incorrect value for S_Coefficient, please value from 0.1 to 100")
 
     alpha = np.arctan( (1.0-thao)/(4.0*sigma) )
 
@@ -253,12 +262,12 @@ def calculations():
     i=0
     s = dmax * np.cosh(Zc_feed/120)
 
-    f.write("SY\ts="+str(s)+"\n")
+    f.write("SY\ts="+str(s*sCoeff)+"\n")
 
     tag = 1
     segmentsVector = []
     while (i<len(Dipolelengths)):
-        seg = np.floor(Dipolelengths[i]/s)
+        seg = np.floor(Dipolelengths[i]/(s*sCoeff))
         if (seg % 2 == 0):
             seg = int(seg + 1)
 
@@ -294,7 +303,7 @@ def calculations():
         print("l"+str(int(i+1))+" =", Dipolelengths[i], "    s =", s, " segments = ", seg, "segments/2 = ", segmentsVector[i])
         i += 1
 
-    f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\t2*dmax\t0\t-feed_length-Z_term\t-2*dmax\t0\tdmax\t'DownZ_term\n")
+    f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\ts/2\t0\t-feed_length-Z_term\t-s/2\t0\tdmax\t'DownZ_term\n")
     tag += 1
     f.write("GW\t"+str(tag)+"\t1\t"+str(Xcoor[len(Xcoor)-1])+"\t-2*dmax\t0\t"+str(Xcoor[len(Xcoor)-1])+"\t2*dmax\t0\tdmax\t'FeedLine\n")
     print("")
@@ -350,11 +359,11 @@ def calculations():
 
     AlphaText = "Alpha = "+str(np.rad2deg(alpha))
     AlphaLbl = Label(master, text = AlphaText)
-    AlphaLbl.place(x=0, y=320)
+    AlphaLbl.place(x=0, y=360)
 
     NText = "N = "+ str(N)
     NLbl = Label(master, text = NText)
-    NLbl.place(x=0, y=360)
+    NLbl.place(x=0, y=400)
 
     
     f.write("FR\t0\t0\t0\t0\t1400\n")
@@ -366,7 +375,7 @@ def calculations():
 #lbl = Label(window, text="Hello")
 #lbl.grid(column=0, row=0)
 btn = Button(master, text="Calculate", command=calculations)
-btn.place(x=95, y=280)
+btn.place(x=95, y=320)
 
 
 
