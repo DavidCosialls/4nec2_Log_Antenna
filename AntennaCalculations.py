@@ -36,7 +36,7 @@ master = Tk()
 master.title("SRF log Antenna Calculations")
 
 master.geometry('1050x600')
-
+#DEFINITION OF THE BUTTONS AND LABELS
 titleLbl = Label(master, text="Select SIGMA and THAO for the desired Directivity")
 titleLbl.place(x=0, y=0)
 
@@ -78,12 +78,12 @@ SCoeff_entry.place(x=180, y=280)
 
 
 img = ImageTk.PhotoImage(Image.open("directivityGRAPH.jpg"))
-    # Create a Label Widget to display the text or Image
 
 directivityGRAPHLBL = Label(master, image= img)
 directivityGRAPHLBL.image= img
 directivityGRAPHLBL.place(x=330, y=10)
 
+#FINISH OF THE DEFINITION
 
 c = 3.0*10**8 #m/s
 fmax = 1600.0*10**6 #Hz
@@ -111,7 +111,8 @@ def calculations():
     DesiredDirectivity = 10.5 #dB
 
     done = True
-
+    
+    #GLOBAL VARIABLES
     global alpha 
     global B 
     global Bar 
@@ -130,6 +131,8 @@ def calculations():
     global dmax
     global sCoeff
 
+    #TRY EVERY VARIABLE TO CHECK IF IT IS A CORRECT ENTRY VALUE
+
     try:
         fmax = float(maxfLbl_entry.get())*10**6
         fmin = float(minfLbl_entry.get())*10**6
@@ -144,19 +147,11 @@ def calculations():
         messagebox.showerror(title="ERROR",message="Sigma and Thao are not correctly introduced")
         return 
 
-    sigmaOpt = 0.243*thao - 0.051
-    sigma = sigmaOpt
-    sigma_entry.config(textvariable=str(sigma))
-
-    
-    
-    dmax = 0.01 #m (anchura, la haremos variable)
     try: 
         dmax = float(width_entry.get())
     except:
         messagebox.showerror(title="ERROR", message="The width is not correctly introduced")
         return
-    
 
     if(thao < 0 or thao >= 1.0):
         messagebox.showerror(title="ERROR",message="Incorrect value for Thao")
@@ -176,11 +171,17 @@ def calculations():
     except:
         messagebox.showerror(title="ERROR", message="Incorrect value for S_Coefficient, please value from 0.1 to 100")
 
-    alpha = np.arctan( (1.0-thao)/(4.0*sigma) )
+    #FINISH OF DEFINING VARIABLES
 
-    cotAlpha = 1/(np.tan(alpha))
+    sigmaOpt = 0.243 * thao - 0.051 #WE CHOOSE THE OPTIMUM SIGMA
+    sigma = sigmaOpt
+    sigma_entry.config(textvariable=str(sigma))
 
-    Bar = 1.1+7.7*(1.0-thao)**2 *(1.0/(np.tan(alpha))) 
+    alpha = np.arctan( (1.0-thao)/(4.0*sigma) ) #HOW TO CALCULATE ALPHA
+
+    cotAlpha = 1/(np.tan(alpha)) #COTANGENT
+
+    Bar = 1.1+7.7*(1.0-thao)**2 *(1.0/(np.tan(alpha))) #BANDWIDTH
     
     B = fmax/fmin 
     Bs = B*Bar
@@ -189,17 +190,16 @@ def calculations():
 
     L = (lambdaMax/4.0)*(1.0-(1/Bs))*(1.0/np.tan(alpha))
 
-    N = (1.0 + (np.log(Bs)/np.log(1.0/thao)))
+    N = (1.0 + (np.log(Bs)/np.log(1.0/thao))) #NUMBER OF ELEMENTS OF THE ANTENNA.
     N = np.round(N)
 
     lmax = lambdaMax/2.0  
-    
-    i=0
-    Dipolelengths = []
-    ell_Z_term = 0.125 * lambdaMax
+
+    ell_Z_term = 0.125 * lambdaMax #Z TERM TO
 
     feed_length = 0.1
-    
+
+    #WRITE ALL THE VARIABLES ON THE FILE
     f.write("SY\tfmin="+str(int(fmin))+"\n")
     f.write("SY\tfmax="+str(int(fmax))+"\n")
     f.write("SY\talpha="+str(np.rad2deg(alpha))+"\n")
@@ -214,22 +214,35 @@ def calculations():
     f.write("SY\tfeed_length="+str(feed_length)+"\n")
     f.write("SY\tlambdaMax="+str(lambdaMax)+"\n")
     f.write("SY\tsegments=5"+"\n")
-    
 
-    Total_L = 0
+    Dipolelengths = []
+    Dipolelengths_STRING = []
+    i = 0
     while (i<N):
         Dipolelengths.append((lambdaMax*0.5)*(thao)**i)
-        Total_L = (lambdaMax*0.5)*(thao)**i
-    
+        Dipolelengths_STRING.append("lambdaMax*0.5*thao^"+str(i))
         i += 1
 
     i=0
     d = []
     BoomLength = 0
     Xcoor = []
+    d_String = []
+    Xcoor_String = []
     while (i<N-1):
         d.append(0.5 * (Dipolelengths[i] - Dipolelengths[i+1]) * cotAlpha)
+        d_String.append("0.5 *("+Dipolelengths_STRING[i]+"-"+Dipolelengths_STRING[i+1]+")*cotalpha")
         BoomLength += d[i]
+        j = 0
+        finalString = ""
+        while (j <= i):
+            if (j<i):
+                finalString = finalString + d_String[j] + "+"
+            if (j==i):
+                finalString = finalString + d_String[j]
+            j += 1
+
+        Xcoor_String.append(finalString)
         Xcoor.append(BoomLength)
         i += 1       
 
@@ -261,40 +274,59 @@ def calculations():
 
     i=0
     s = dmax * np.cosh(Zc_feed/120)
-
-    f.write("SY\ts="+str(s*sCoeff)+"\n")
+    f.write("SY\tsCoeff=" + str(sCoeff) + "\n")
+    f.write("SY\ts="+str(s)+"\n")
 
     tag = 1
     segmentsVector = []
     while (i<len(Dipolelengths)):
-        seg = np.floor(Dipolelengths[i]/(s*sCoeff))
-        if (seg % 2 == 0):
-            seg = int(seg + 1)
+        seg = Dipolelengths[i]/(s*sCoeff)
+        seg_round = np.round(Dipolelengths[i]/(s*sCoeff))
+        seg_round_by2 = np.round(seg/2)
+
+
+
+        seg_string = Dipolelengths_STRING[i]+"/(s*sCoeff)"
+        round_string = "((" + seg_string + ")/2)+1"
+        if (seg_round % 2 == 0):
+            round_string = "((" + seg_string + ")/2)"
+            seg_string = "("+Dipolelengths_STRING[i] + "/(s*sCoeff))-1"
+            seg_round = seg_round - 1
+        else:
+            if (seg > seg_round):
+                round_string = "((" + seg_string + ")/2)"
+
+
+
 
         #MID POINT TO PUT THE T-LINE
-        round = int(seg/2) + 1
-        segmentsVector.append(round)
+        round = int(seg_round/2) + 1
+
+        segmentsVector.append(round_string)
 
         if (i==0):
 
             #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
-            f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+            #f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+
+            f.write("GW\t"+str(tag)+"\t"+seg_string+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+
             tag += 1
             #f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\t-s/2\t0\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
             #tag += 1
         else:
             if (i%2 != 0):
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
-                f.write("GW\t" + str(tag) + "\t" + str(int(seg)) + "\t" + str(
-                    Xcoor[i - 1]) + "-feed_length\t0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t0\t" + str(
-                    Xcoor[i - 1]) + "-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^" + str(
+                f.write("GW\t" + str(tag) + "\t" + seg_string + "\t" +
+                    Xcoor_String[i - 1] + "-feed_length\t0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t0\t" +
+                    Xcoor_String[i - 1] + "-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^" + str(
                     i) + "\t0\tdmax\t'DipoleUpper" + str(int(N - i)) + "\n")
                 tag += 1
                 # f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 # tag += 1
             else:
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
-                f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t"+str(Xcoor[i-1])+"-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
+                f.write("GW\t"+str(tag)+"\t"+seg_string+"\t"+Xcoor_String[i - 1]+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t"+Xcoor_String[i - 1]+"-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
                 tag += 1
                 #f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 #tag += 1
@@ -327,11 +359,11 @@ def calculations():
 
 
     #Z-LINE
-    f.write("TL\t"+str(tag)+"\t1\t"+str(tag-2)+"\t"+str(segmentsVector[tag-3])+"\t50\t0\t0\t0\t0\t0\n")
+    f.write("TL\t"+str(tag)+"\t1\t"+str(tag-2)+"\t"+segmentsVector[tag-3]+"\t50\t0\t0\t0\t0\t0\n")
     #f.write("TL\t"+str(tag)+"\t3\t"+str(tag-3)+"\t1\t50\t0\t0\t0\t0\t0\n")
 
     #VOLTAGE SOURCE
-    f.write("TL\t"+str(tag-1)+"\t1\t"+str(1)+"\t"+str(segmentsVector[0])+"\t50\t0\t0\t0\t0\t0\n")
+    f.write("TL\t"+str(tag-1)+"\t1\t"+str(1)+"\t"+segmentsVector[0]+"\t50\t0\t0\t0\t0\t0\n")
     #f.write("TL\t"+str(tag-1)+"\t3\t"+str(2)+"\t1\t50\t0\t0\t0\t0\t0\n")
 
     tag = 1
@@ -344,7 +376,7 @@ def calculations():
         #TL SEG_1 ANCHO SEG_2 ANCHO Z0 0 1e+99 1e+99 1e+99 1e+99
         #TL 1 s_w 2 s_w 50 0 1e+99 1e+99 1e+99 1e+99
 
-        f.write("TL\t"+str(tag)+"\t"+str(segmentsVector[i])+"\t"+str(tag+1)+"\t"+str(segmentsVector[i+1])+"\t50\t0\t0\t0\t0\t0\n")
+        f.write("TL\t"+str(tag)+"\t"+segmentsVector[i]+"\t"+str(tag+1)+"\t"+segmentsVector[i+1]+"\t50\t0\t0\t0\t0\t0\n")
         #f.write("TL\t"+str(tag+1)+"\t1\t"+str(tag+2)+"\t1\t50\t0\t0\t0\t0\t0\n")
         i += 1
         tag += 1
