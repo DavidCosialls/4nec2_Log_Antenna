@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85fc0233-0bff-4834-a393-2cd90bb18a8e" name="Changes" comment="New Optimized files">
-      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_NEWVERSION1.NEC" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_NEWVERSION2.NEC" afterDir="false" />
+    <list default="true" id="85fc0233-0bff-4834-a393-2cd90bb18a8e" name="Changes" comment="Changes of the main file to Vertical polarization">
+      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_NEWVERSION3_095.NEC" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_NEWVERSION4.NEC" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AntennaCalculations.py" beforeDir="false" afterPath="$PROJECT_DIR$/AntennaCalculations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Archivos generados/Optimizer.log" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos generados/Optimizer.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Archivos generados/logAntenna_NEWVERSION2.NEC" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_NEWVERSION2.NEC" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logAntenna" beforeDir="false" afterPath="$PROJECT_DIR$/logAntenna" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +62,9 @@
       <workItem from="1670494445248" duration="6305000" />
       <workItem from="1670921688978" duration="343000" />
       <workItem from="1670922061894" duration="2926000" />
-      <workItem from="1670955109856" duration="6492000" />
+      <workItem from="1670955109856" duration="6596000" />
+      <workItem from="1671048590609" duration="6445000" />
+      <workItem from="1671128738166" duration="1187000" />
     </task>
     <task id="LOCAL-00001" summary="New Optimized files">
       <created>1670930955829</created>
@@ -70,7 +73,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670930955829</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Changes of the main file to Vertical polarization">
+      <created>1670972763691</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1670972763691</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -78,9 +88,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="New Optimized files" />
-    <option name="LAST_COMMIT_MESSAGE" value="New Optimized files" />
+    <MESSAGE value="Changes of the main file to Vertical polarization" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes of the main file to Vertical polarization" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/4nec2_Log_Antenna$AntennaCalculations.coverage" NAME="AntennaCalculations Coverage Results" MODIFIED="1670960084247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/4nec2_Log_Antenna$AntennaCalculations.coverage" NAME="AntennaCalculations Coverage Results" MODIFIED="1671129906425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

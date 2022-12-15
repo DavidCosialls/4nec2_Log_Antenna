@@ -323,9 +323,9 @@ def calculations():
         print("l"+str(int(i+1))+" =", Dipolelengths[i], "    s =", s, " segments = ", seg, "segments/2 = ", segmentsVector[i])
         i += 1
 
-    f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\t0\ts/2\t-feed_length-Z_term\t0\t-s/2\tdmax\t'DownZ_term\n")
+    f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\t0\t-s/2\t-feed_length-Z_term\t0\ts/2\tdmax\t'DownZ_term\n")
     tag += 1
-    f.write("GW\t"+str(tag)+"\t1\t"+str(Xcoor[len(Xcoor)-1])+"\t0\t-2*dmax\t"+str(Xcoor[len(Xcoor)-1])+"\t0\t2*dmax\tdmax\t'FeedLine\n")
+    f.write("GW\t"+str(tag)+"\t1\t"+str(Xcoor[len(Xcoor)-1])+"\t0\t2*dmax\t"+str(Xcoor[len(Xcoor)-1])+"\t0\t-2*dmax\tdmax\t'FeedLine\n")
     print("")
     print("\033[1;33m"+"Distances: "+'\033[0;m')
 
