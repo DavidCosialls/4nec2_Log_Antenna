@@ -85,7 +85,7 @@ directivityGRAPHLBL.place(x=330, y=10)
 
 #FINISH OF THE DEFINITION
 
-c = 3.0*10**8 #m/s
+c = 299792458.0 #m/s
 fmax = 1600.0*10**6 #Hz
 fmin = 1200.0*10**6 #Hz
 
@@ -218,10 +218,14 @@ def calculations():
 
     Dipolelengths = []
     Dipolelengths_STRING = []
+
+    dshortest = dmax*thao**(N-1)
+    diameter = []
     i = 0
     while (i<N):
         Dipolelengths.append((lambdaMax*0.5)*(thao)**i)
         Dipolelengths_STRING.append("lambdaMax*0.5*thao^"+str(i))
+        diameter.append((dshortest/thao**i)/2)
         i += 1
 
     i=0
@@ -229,10 +233,15 @@ def calculations():
     BoomLength = 0
     Xcoor = []
     d_String = []
+    
+    oneOverThao = 1/thao
     Xcoor_String = []
     while (i<N-1):
         d.append(0.5 * (Dipolelengths[i] - Dipolelengths[i+1]) * cotAlpha)
         d_String.append("0.5 *("+Dipolelengths_STRING[i]+"-"+Dipolelengths_STRING[i+1]+")*cotalpha")
+        
+        
+
         BoomLength += d[i]
         j = 0
         finalString = ""
@@ -247,7 +256,20 @@ def calculations():
         Xcoor.append(BoomLength)
         i += 1       
 
-    lmaxOverdmax = (Dipolelengths[int(N-1)])/dmax
+    lmaxOverdmax = (Dipolelengths[int(N-1)])/dshortest
+    i=0
+    Z_vector=[]
+    while (i<int(N)):
+        lmaxOverdmax = (Dipolelengths[int(N-1)])/diameter[int(N)-1-i]
+
+        Za = 120.0*(np.log(lmaxOverdmax)-2.25)
+        ZaRin = Za/Rin
+        sigma_mean = sigma / np.sqrt(thao)
+
+        Zc_feed = Rin**2 * (8 * sigma_mean * Za)**-1
+        Zc_feed += Rin * np.sqrt( (Rin**2 * 0.015625 * sigma_mean**-2 * Za**-2) +1)
+        Z_vector.append(Zc_feed)
+        i += 1
 
     Za = 120.0*(np.log(lmaxOverdmax)-2.25)
     sigmaPrima = sigma/np.sqrt(thao)
@@ -281,7 +303,9 @@ def calculations():
 
     tag = 1
     segmentsVector = []
+    
     while (i<len(Dipolelengths)):
+        s = diameter[int(N)-1-i]*2 * np.cosh(Zc_feed/120)
         seg = np.floor(Dipolelengths[i] / s)
         if (seg % 2 == 0):
             seg = int(seg + 1)
@@ -296,7 +320,7 @@ def calculations():
             #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
             #f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
 
-            f.write("GW\t"+str(tag)+"\t"+seg_string+"\t-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\tdmax\t'Dipole number"+str(int(N-i))+"\n")
+            f.write("GW\t"+str(tag)+"\t"+seg_string+"\t-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[int(N)-1-i], 4))+"\t'Dipole number"+str(int(N-i))+"\n")
 
             tag += 1
             #f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\t-s/2\t0\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
@@ -306,7 +330,7 @@ def calculations():
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
                 f.write("GW\t" + str(tag) + "\t" + seg_string + "\t" +
                     Xcoor_String[i - 1] + "-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t" +
-                    Xcoor_String[i - 1] + "-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\tdmax\t'Dipole number" + str(int(N - i)) + "\n")
+                    Xcoor_String[i - 1] + "-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t"+str(np.round(diameter[int(N)-1-i], 4))+"\t'Dipole number" + str(int(N - i)) + "\n")
                 tag += 1
                 # f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 # tag += 1
@@ -314,7 +338,7 @@ def calculations():
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
                 f.write("GW\t"+str(tag)+"\t"+seg_string+"\t" +
                         Xcoor_String[i-1]+"-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t" +
-                        Xcoor_String[i-1]+"-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\tdmax\t'Dipole number "+str(int(N-i))+"\n")
+                        Xcoor_String[i-1]+"-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[int(N)-1-i],4))+"\t'Dipole number "+str(int(N-i))+"\n")
                 tag += 1
                 #f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 #tag += 1
@@ -364,7 +388,7 @@ def calculations():
         #TL SEG_1 ANCHO SEG_2 ANCHO Z0 0 1e+99 1e+99 1e+99 1e+99
         #TL 1 s_w 2 s_w 50 0 1e+99 1e+99 1e+99 1e+99
 
-        f.write("TL\t"+str(tag)+"\t"+segmentsVector[i]+"\t"+str(tag+1)+"\t"+segmentsVector[i+1]+"\tZTLINE\t0\t0\t0\t0\t0\n")
+        f.write("TL\t"+str(tag)+"\t"+segmentsVector[i]+"\t"+str(tag+1)+"\t"+segmentsVector[i+1]+"\t"+str(Z_vector[i+1])+"\t0\t0\t0\t0\t0\n")
         i += 1
         tag += 1
 
