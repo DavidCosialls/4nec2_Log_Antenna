@@ -1,23 +1,23 @@
-CM
+CM 
 CE
-SY	fmin=1200000000
-SY	fmax=1640000000
-SY	alpha=4.401525988786425
-SY	cotalpha=12.991636363636351
-SY	c=300000000
-SY	B=fmax/fmin
-SY	thao=0.945
-SY	sigma=0.178635
-SY	N=13
-SY	dmax=0.00175
-SY	Z_term=0.0312
-SY	feed_length=0.1
-SY	lambdaMax=0.24982704833333333
-SY	segments=5
-SY	sCoeff=1.0
-SY	s=0.004
-SY	Zfeed=61.8281
-SY	Zo=61.8281
+SY fmin=1200000000
+SY fmax=1640000000
+SY alpha=4.401525988786425
+SY cotalpha=12.991636363636351
+SY c=300000000
+SY B=fmax/fmin
+SY thao=0.945
+SY sigma=0.178635
+SY N=13
+SY dmax=0.00175
+SY Z_term=0.02
+SY feed_length=0.1
+SY lambdaMax=0.24982704833333333
+SY segments=5
+SY sCoeff=1.0
+SY s=0.004
+SY Zfeed=61.8281
+SY Zo=68
 GW	1	31	-feed_length	0	-0.5*(lambdaMax*0.5)*(thao)^0	-feed_length	0	0.5*(lambdaMax*0.5)*(thao)^0	0.0009	'Dipole number13
 GW	2	29	0.5 *(lambdaMax*0.5*thao^0-lambdaMax*0.5*thao^1)*cotalpha-feed_length	0	0.5*(lambdaMax*0.5)*(thao)^1	0.5 *(lambdaMax*0.5*thao^0-lambdaMax*0.5*thao^1)*cotalpha-feed_length	0	-0.5*(lambdaMax*0.5)*(thao)^1	0.0009	'Dipole number12
 GW	3	29	0.5 *(lambdaMax*0.5*thao^0-lambdaMax*0.5*thao^1)*cotalpha+0.5 *(lambdaMax*0.5*thao^1-lambdaMax*0.5*thao^2)*cotalpha-feed_length	0	-0.5*(lambdaMax*0.5)*(thao)^2	0.5 *(lambdaMax*0.5*thao^0-lambdaMax*0.5*thao^1)*cotalpha+0.5 *(lambdaMax*0.5*thao^1-lambdaMax*0.5*thao^2)*cotalpha-feed_length	0	0.5*(lambdaMax*0.5)*(thao)^2	0.001	'Dipole number 11
@@ -36,7 +36,7 @@ GW	15	1	0.3998632502644508	0	2*dmax	0.3998632502644508	0	-2*dmax	dmax	'FeedLine
 GE	0
 GN	-1
 EK
-EX	0	15	1	0	1	0	1	0	0
+EX	0	15	1	0	1	0	1
 TL	15	1	13	8	Zfeed	0	0	0	0	0
 TL	14	1	1	16	Zo	0	0	0	0	0
 TL	1	16	2	15	Zo	0	0	0	0	0
@@ -51,5 +51,5 @@ TL	9	10	10	10	Zo	0	0	0	0	0
 TL	10	10	11	9	Zo	0	0	0	0	0
 TL	11	9	12	9	Zo	0	0	0	0	0
 TL	12	9	13	8	Zo	0	0	0	0	0
-FR	0	0	0	0	1400
+FR	0	0	0	0	1400	0
 EN

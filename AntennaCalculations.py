@@ -7,10 +7,7 @@ from tkinter import messagebox
 
 from PIL import ImageTk, Image
 
-f = open('logAntenna', 'w')
 
-f.write("CM\n")
-f.write("CE\n")
 
 def openImpedanceWindow(): 
     newWindow = Toplevel(master)
@@ -89,47 +86,15 @@ c = 299792458.0 #m/s
 fmax = 1600.0*10**6 #Hz
 fmin = 1200.0*10**6 #Hz
 
-alpha = 0.0 
-B = 0.0
-Bar = 0.0
-Bs = 0.0
-lambdaMax = 0.0
-L = 0.0
-N = 0
-lmax = 0.0
-lmaxOverdmax = 0.0
-sigma = 0.0
-thao = 0.0
-dmax = 0.0
-Rin = 0.0
-Za = 0.0
-ZaRin = 0.0
-sCoeff = 0.0
-
 def calculations():
+    f = open('logAntenna', 'w')
+
+    f.write("CM\n")
+    f.write("CE\n")
     
     DesiredDirectivity = 10.5 #dB
 
-    done = True
-    
     #GLOBAL VARIABLES
-    global alpha
-    global B 
-    global Bar 
-    global Bs 
-    global lambdaMax
-    global L
-    global N 
-    global lmax 
-    global lmaxOverdmax 
-    global sigma
-    global thao 
-    global dmax 
-    global Rin 
-    global Za 
-    global ZaRin 
-    global dmax
-    global sCoeff
 
     #TRY EVERY VARIABLE TO CHECK IF IT IS A CORRECT ENTRY VALUE
 
@@ -258,29 +223,13 @@ def calculations():
 
     lmaxOverdmax = (Dipolelengths[int(N-1)])/dshortest
     i=0
-    Z_vector=[]
-    while (i<int(N)):
-        lmaxOverdmax = (Dipolelengths[int(N-1)])/diameter[int(N)-1-i]
-
-        Za = 120.0*(np.log(lmaxOverdmax)-2.25)
-        ZaRin = Za/Rin
-        sigma_mean = sigma / np.sqrt(thao)
-
-        Zc_feed = Rin**2 * (8 * sigma_mean * Za)**-1
-        Zc_feed += Rin * np.sqrt( (Rin**2 * 0.015625 * sigma_mean**-2 * Za**-2) +1)
-        Z_vector.append(Zc_feed)
-        i += 1
 
     Za = 120.0*(np.log(lmaxOverdmax)-2.25)
-    sigmaPrima = sigma/np.sqrt(thao)
-    
-    ZaRin = Za/Rin
 
     sigma_mean = sigma / np.sqrt(thao)
     Zc_feed = Rin**2 * (8 * sigma_mean * Za)**-1
     Zc_feed += Rin * np.sqrt( (Rin**2 * 0.015625 * sigma_mean**-2 * Za**-2) +1)
 
-    
 
     print("\033[4;30;47m"+"---------RESULTS---------"+'\033[0;m')
 
@@ -299,13 +248,12 @@ def calculations():
     s = dmax * np.cosh(Zc_feed/120)
     f.write("SY\tsCoeff=" + str(sCoeff) + "\n")
     f.write("SY\ts="+str(np.round(s, 4))+"\n")
-    f.write("SY\tZTLINE="+str(np.round(Zc_feed, 4))+"\n")
-
+    f.write("SY\tZfeed="+str(np.round(Zc_feed, 4))+"\n")
+    f.write("SY\tZo="+str(np.round(Zc_feed, 4))+"\n")
     tag = 1
     segmentsVector = []
     
     while (i<len(Dipolelengths)):
-        s = diameter[int(N)-1-i]*2 * np.cosh(Zc_feed/120)
         seg = np.floor(Dipolelengths[i] / s)
         if (seg % 2 == 0):
             seg = int(seg + 1)
@@ -320,7 +268,7 @@ def calculations():
             #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
             #f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
 
-            f.write("GW\t"+str(tag)+"\t"+seg_string+"\t-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[int(N)-1-i], 4))+"\t'Dipole number"+str(int(N-i))+"\n")
+            f.write("GW\t"+str(tag)+"\t"+seg_string+"\t-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[i], 4))+"\t'Dipole number"+str(int(N-i))+"\n")
 
             tag += 1
             #f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\t-s/2\t0\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
@@ -330,7 +278,7 @@ def calculations():
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
                 f.write("GW\t" + str(tag) + "\t" + seg_string + "\t" +
                     Xcoor_String[i - 1] + "-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t" +
-                    Xcoor_String[i - 1] + "-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t"+str(np.round(diameter[int(N)-1-i], 4))+"\t'Dipole number" + str(int(N - i)) + "\n")
+                    Xcoor_String[i - 1] + "-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t"+str(np.round(diameter[i], 4))+"\t'Dipole number" + str(int(N - i)) + "\n")
                 tag += 1
                 # f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 # tag += 1
@@ -338,7 +286,7 @@ def calculations():
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
                 f.write("GW\t"+str(tag)+"\t"+seg_string+"\t" +
                         Xcoor_String[i-1]+"-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t" +
-                        Xcoor_String[i-1]+"-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[int(N)-1-i],4))+"\t'Dipole number "+str(int(N-i))+"\n")
+                        Xcoor_String[i-1]+"-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[i],4))+"\t'Dipole number "+str(int(N-i))+"\n")
                 tag += 1
                 #f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 #tag += 1
@@ -369,13 +317,13 @@ def calculations():
     #     Voltage TAG SEG OPT REAL IMAG MAGN PHASE 
     f.write("EX\t0\t"+str(tag)+"\t1\t0\t1\t0\t1\t0\t0\n")
 
-
-    #Z-LINE
-    f.write("TL\t"+str(tag)+"\t1\t"+str(tag-2)+"\t"+segmentsVector[tag-3]+"\tZTLINE\t0\t0\t0\t0\t0\n")
+    # VOLTAGE SOURCE
+    f.write("TL\t"+str(tag)+"\t1\t"+str(tag-2)+"\t"+segmentsVector[tag-3]+"\tZfeed\t0\t0\t0\t0\t0\n")
     #f.write("TL\t"+str(tag)+"\t3\t"+str(tag-3)+"\t1\t50\t0\t0\t0\t0\t0\n")
 
-    #VOLTAGE SOURCE
-    f.write("TL\t"+str(tag-1)+"\t1\t"+str(1)+"\t"+segmentsVector[0]+"\tZTLINE\t0\t0\t0\t0\t0\n")
+
+    # Z-LINE
+    f.write("TL\t"+str(tag-1)+"\t1\t"+str(1)+"\t"+segmentsVector[0]+"\tZo\t0\t0\t0\t0\t0\n")
     #f.write("TL\t"+str(tag-1)+"\t3\t"+str(2)+"\t1\t50\t0\t0\t0\t0\t0\n")
 
     tag = 1
@@ -388,7 +336,7 @@ def calculations():
         #TL SEG_1 ANCHO SEG_2 ANCHO Z0 0 1e+99 1e+99 1e+99 1e+99
         #TL 1 s_w 2 s_w 50 0 1e+99 1e+99 1e+99 1e+99
 
-        f.write("TL\t"+str(tag)+"\t"+segmentsVector[i]+"\t"+str(tag+1)+"\t"+segmentsVector[i+1]+"\t"+str(Z_vector[i+1])+"\t0\t0\t0\t0\t0\n")
+        f.write("TL\t"+str(tag)+"\t"+segmentsVector[i]+"\t"+str(tag+1)+"\t"+segmentsVector[i+1]+"\tZo\t0\t0\t0\t0\t0\n")
         i += 1
         tag += 1
 
