@@ -188,9 +188,11 @@ def calculations():
     diameter = []
     i = 0
     while (i<N):
+        f.write("SY\tElementSep"+str(i+1)+"=0"+"\n")
+        f.write("SY\tElementLength" + str(i + 1) + "=0" + "\n")
         Dipolelengths.append((lambdaMax*0.5)*(thao)**i)
         Dipolelengths_STRING.append("lambdaMax*0.5*thao^"+str(i))
-        diameter.append((dshortest/thao**i)/2)
+        diameter.append((dshortest/thao**i)/2) #RADIUS
         i += 1
 
     i=0
@@ -214,19 +216,18 @@ def calculations():
             if (j<i):
                 finalString = finalString + d_String[j] + "+"
             if (j==i):
-                finalString = finalString + d_String[j]
+                finalString = finalString + d_String[j] +"+ ElementSep"+str(i+1)
             j += 1
 
         Xcoor_String.append(finalString)
         Xcoor.append(BoomLength)
         i += 1       
 
-    lmaxOverdmax = (Dipolelengths[int(N-1)])/dshortest
-    i=0
-
-    Za = 120.0*(np.log(lmaxOverdmax)-2.25)
 
     sigma_mean = sigma / np.sqrt(thao)
+    lmaxOverdmax = (Dipolelengths[int(N-1)])/dmax
+    Za = 120.0*(np.log(lmaxOverdmax)-2.25)
+
     Zc_feed = Rin**2 * (8 * sigma_mean * Za)**-1
     Zc_feed += Rin * np.sqrt( (Rin**2 * 0.015625 * sigma_mean**-2 * Za**-2) +1)
 
@@ -249,11 +250,22 @@ def calculations():
     f.write("SY\tsCoeff=" + str(sCoeff) + "\n")
     f.write("SY\ts="+str(np.round(s, 4))+"\n")
     f.write("SY\tZfeed="+str(np.round(Zc_feed, 4))+"\n")
-    f.write("SY\tZo="+str(np.round(Zc_feed, 4))+"\n")
+    f.write("SY\tZo="+str(np   .round(Zc_feed, 4))+"\n")
     tag = 1
     segmentsVector = []
-    
+    Z_Vector = []
+    s_Vector = []
+
+
     while (i<len(Dipolelengths)):
+        lmaxOverdmax = (Dipolelengths[i]) / (diameter[i] * 2)  # DIAMETER IS THE RADIUS
+        Za = 120.0 * (np.log(lmaxOverdmax) - 2.25)
+        Zc_feed = Rin ** 2 * (8 * sigma_mean * Za) ** -1
+        Zc_feed += Rin * np.sqrt((Rin ** 2 * 0.015625 * sigma_mean ** -2 * Za ** -2) + 1)
+        Z_Vector.append(Zc_feed)
+        s = (diameter[i] * 2) * np.cosh(Zc_feed / 120)
+        s_Vector.append(s)
+
         seg = np.floor(Dipolelengths[i] / s)
         if (seg % 2 == 0):
             seg = int(seg + 1)
@@ -268,7 +280,7 @@ def calculations():
             #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT       
             #f.write("GW\t"+str(tag)+"\t"+str(int(seg))+"\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\t-feed_length\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleUpper"+str(int(N-i))+"\n")
 
-            f.write("GW\t"+str(tag)+"\t"+seg_string+"\t-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[i], 4))+"\t'Dipole number"+str(int(N-i))+"\n")
+            f.write("GW\t"+str(tag)+"\t"+seg_string+"\t-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"-ElementLength" + str(i + 1)+"\t-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"+ElementLength" + str(i + 1)+"\t"+str(np.round(diameter[i], 4))+"\t'Dipole number"+str(int(N-i))+"\n")
 
             tag += 1
             #f.write("GW\t"+str(tag)+"\tsegments\t-feed_length\t-s/2\t0\t-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
@@ -277,16 +289,16 @@ def calculations():
             if (i%2 != 0):
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
                 f.write("GW\t" + str(tag) + "\t" + seg_string + "\t" +
-                    Xcoor_String[i - 1] + "-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t" +
-                    Xcoor_String[i - 1] + "-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "\t"+str(np.round(diameter[i], 4))+"\t'Dipole number" + str(int(N - i)) + "\n")
+                    Xcoor_String[i - 1] + "-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "+ElementLength" + str(i + 1)+ "\t" +
+                    Xcoor_String[i - 1] + "-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^" + str(i) + "-ElementLength" + str(i + 1)+ "\t"+str(np.round(diameter[i], 4))+"\t'Dipole number" + str(int(N - i)) + "\n")
                 tag += 1
                 # f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 # tag += 1
             else:
                 #                 TAG    SEGMENTS               X1                          Y1    Z1       X2                                           Y2                       Z2   RADIUS    COMMENT
                 f.write("GW\t"+str(tag)+"\t"+seg_string+"\t" +
-                        Xcoor_String[i-1]+"-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t" +
-                        Xcoor_String[i-1]+"-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t"+str(np.round(diameter[i],4))+"\t'Dipole number "+str(int(N-i))+"\n")
+                        Xcoor_String[i-1]+"-feed_length\t0\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+ "-ElementLength" + str(i + 1)+"\t" +
+                        Xcoor_String[i-1]+"-feed_length\t0\t0.5*(lambdaMax*0.5)*(thao)^"+str(i)+ "+ElementLength" + str(i + 1)+"\t"+str(np.round(diameter[i],4))+"\t'Dipole number "+str(int(N-i))+"\n")
                 tag += 1
                 #f.write("GW\t"+str(tag)+"\tsegments\t"+str(Xcoor[i-1])+"-feed_length\t-s/2\t0\t"+str(Xcoor[i-1])+"-feed_length\t-0.5*(lambdaMax*0.5)*(thao)^"+str(i)+"\t0\tdmax\t'DipoleDown"+str(int(N-i))+"\n")
                 #tag += 1
@@ -295,7 +307,7 @@ def calculations():
         print("l"+str(int(i+1))+" =", Dipolelengths[i], "    s =", s, " segments = ", seg, "segments/2 = ", segmentsVector[i])
         i += 1
 
-    f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\t0\t-s/2\t-feed_length-Z_term\t0\ts/2\tdmax\t'DownZ_term\n")
+    f.write("GW\t"+str(tag)+"\t1\t-feed_length-Z_term\t0\t-"+str(s_Vector[0])+"/2\t-feed_length-Z_term\t0\t"+str(s_Vector[0])+"/2\tdmax\t'DownZ_term\n")
     tag += 1
     f.write("GW\t"+str(tag)+"\t1\t"+str(Xcoor[len(Xcoor)-1])+"\t0\t2*dmax\t"+str(Xcoor[len(Xcoor)-1])+"\t0\t-2*dmax\tdmax\t'FeedLine\n")
     print("")

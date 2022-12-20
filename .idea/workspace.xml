@@ -4,10 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85fc0233-0bff-4834-a393-2cd90bb18a8e" name="Changes" comment="Changes of the main file to Vertical polarization">
-      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_A_1.nec" afterDir="false" />
+    <list default="true" id="85fc0233-0bff-4834-a393-2cd90bb18a8e" name="Changes" comment="Now the antenna has different radius per wire.">
+      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_A_2.nec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_A_3.nec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_A_4.nec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_A_4_prueba.nec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Archivos generados/logAntenna_A_5.nec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logAntenna_Entrega_G7_David_Victor_Marc.NEC" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/logAntenna_Entrega_G7_David_Victor_Marc.out" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AntennaCalculations.py" beforeDir="false" afterPath="$PROJECT_DIR$/AntennaCalculations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Archivos generados/Optimizer.log" beforeDir="false" afterPath="$PROJECT_DIR$/Archivos generados/Optimizer.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Archivos generados/logAntenna_A_1.nec" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/logAntenna" beforeDir="false" afterPath="$PROJECT_DIR$/logAntenna" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +50,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Universidad\REPO-SRF\4nec2_Log_Antenna" />
+      <recent name="E:\Universidad\REPO-SRF\4nec2_Log_Antenna\Archivos generados" />
       <recent name="E:\Universidad\SRF\Repo4nec2\4nec2_Log_Antenna\Archivos generados" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Universidad\REPO-SRF\4nec2_Log_Antenna\Archivos generados" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -62,7 +75,7 @@
       <workItem from="1670955109856" duration="6596000" />
       <workItem from="1671048590609" duration="6445000" />
       <workItem from="1671128738166" duration="1187000" />
-      <workItem from="1671481865032" duration="2097000" />
+      <workItem from="1671481865032" duration="14261000" />
     </task>
     <task id="LOCAL-00001" summary="New Optimized files">
       <created>1670930955829</created>
@@ -78,7 +91,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670972763691</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Now the antenna has different radius per wire.">
+      <created>1671484544282</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1671484544282</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -87,9 +107,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="New Optimized files" />
     <MESSAGE value="Changes of the main file to Vertical polarization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes of the main file to Vertical polarization" />
+    <MESSAGE value="Now the antenna has different radius per wire." />
+    <option name="LAST_COMMIT_MESSAGE" value="Now the antenna has different radius per wire." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/4nec2_Log_Antenna$AntennaCalculations.coverage" NAME="AntennaCalculations Coverage Results" MODIFIED="1671483341003" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/4nec2_Log_Antenna$AntennaCalculations.coverage" NAME="AntennaCalculations Coverage Results" MODIFIED="1671491430054" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
